@@ -1,3 +1,10 @@
-FROM tomcat:8
-# Take the war and copy to webapps of tomcat
-COPY target/*.war /usr/local/tomcat/webapps/abc.war
+FROM maven as build
+WORKDIR /app
+COPY . .
+RUN mvn install
+
+FROM openjdk:11.0
+WORKDIR /app
+COPY --from=build /app/target/dockeransible.war /app
+EXPOSE 9090
+CMD ["java","-jar","dockeransible.war"]
