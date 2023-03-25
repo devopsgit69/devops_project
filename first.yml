@@ -1,0 +1,9 @@
+---
+ - name: copy files
+   hosts: all
+   gather_facts: false
+   tasks: 
+   - name: copying file
+     copy:
+        src: etc/bin/bash/h.html
+        dest: /ec2-user/
